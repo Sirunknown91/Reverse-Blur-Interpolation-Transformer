@@ -82,7 +82,7 @@ def main():
     print(f"Results saved to {output_dir}")
 
     # TODO run model on blurry images and save inferred data
-
+    
 
 if __name__ == "__main__":
     main()
