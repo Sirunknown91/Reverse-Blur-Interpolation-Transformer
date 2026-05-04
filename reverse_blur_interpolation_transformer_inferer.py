@@ -43,15 +43,15 @@ def naive_average_baseline(sharp_frames):
 
 def main():
     device         = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    checkpoint_path = 'checkpoints/epoch_4.pth'
-    input_dir       = 'dataset/train/scene_1/sharp'
+    checkpoint_path = 'checkpoints/best_model.pth'
+    input_dir       = 'dataset/test/scene_1/sharp'
     output_dir      = 'results/'
     num_frames      = 9
 
     os.makedirs(output_dir, exist_ok=True)
 
     # Load model
-    model = create_model().to(device)
+    model = create_model(dim=32, num_heads=4, num_rstb_blocks=2, window_size=8).to(device)
 
     state = torch.load(checkpoint_path, map_location=device)
     model.load_state_dict(state['model_state_dict'])
@@ -80,8 +80,6 @@ def main():
     vutils.save_image(comparison, os.path.join(output_dir, 'comparison.png'), nrow=2, padding=4)
 
     print(f"Results saved to {output_dir}")
-
-    # TODO run model on blurry images and save inferred data
 
 
 if __name__ == "__main__":
